@@ -61,7 +61,6 @@ static uint32_t timout1 = 0;
 static uint32_t timout2 = 0; 
 static uint32_t timout3 = 0; 
 static uint8_t RS_OK;
-//static uint8_t RS_count;
 
 uint8_t buffer;
 uint8_t flagtest = 0;
@@ -129,14 +128,6 @@ void MBSendData(unsigned char count, unsigned char data[])	//Send final data ove
 		USART2->TDR = data[c];
 	}
 }
-//void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-//{
-//	if(huart->Instance == huart2.Instance)
-//	{
-//		Queue_wirte(&queue, buffer);
-//		HAL_UART_Receive_IT(&huart2, &buffer, 1);
-//	}
-//}
 void temp_cal(uint16_t beta_value)
 {
 	uint16_t ADC_VAL;
@@ -150,7 +141,7 @@ void temp_cal(uint16_t beta_value)
                         log( thermistorResistor / RT_AT_ROOM_TEMP ) / beta_value +
                         1 / ROOM_TEMP );
      
-  temperatureC = (temperatureK - 273.15 + 1)*10; // Temp in °C*10
+  temperatureC = (temperatureK - 273.15 + 1)*10; // Temp in Â°C*10
 	temp[count++] = temperatureC;
 	if((temperatureC < MIN_TEMP)||(temperatureC > MAX_TEMP)||(ADC_VAL == 4095))
 	{
@@ -228,20 +219,8 @@ void Data_process()
 		 if ((strncmp((char*)data_in, "ping",4) != 0))
 			{
 				RS_OK = 0;
-//				if ((strncmp((char*)data_in, "reset",5) == 0))
-//				{
-//					printf("#OK,0B\r\n");
-//					NVIC_SystemReset();
-//				}
-//				else
-//				{
-//					memset((unsigned char*)data_in, 0, MaxFrameIndex);
-//					flagtest = 1;
-//				}
 				printf("#OK,0B\r\n");
 				NVIC_SystemReset();
-//				printf("#OK,0B\r\n");
-//				flagtest = 0;
 			}		
 			memset((unsigned char*)data_in, 0, MaxFrameIndex);	
 			DataPos = 0;
@@ -251,17 +230,6 @@ void Data_process()
 	{
 			switch (flagtest)
 			{
-//				case 0:
-//				{
-//					if(HAL_GetTick() - timout0 > 999)
-//					{
-//						sprintf(str, "#Temperature,%d,",(int)temperatureC);
-//						CS = NMEA_checkSum(str, (int) (strlen(str)));
-//						printf("#Temperature,%d,%X\r\n", (int)temperatureC, CS);
-//						timout0 = HAL_GetTick();
-//					}
-//				}
-//				break;
 				case 1:
 				{
 					if(HAL_GetTick() - timout1 > 999)
@@ -297,16 +265,6 @@ void Data_process()
 				}
 		}
 }
-//void check_reset(void)
-//{
-//    if (__HAL_RCC_GET_FLAG(RCC_FLAG_SFTRST))
-//    {
-//        // This reset is induced by calling the ARM CMSIS 
-//        // `NVIC_SystemReset()` function!
-//        RS_OK = 1 ;
-//    }			
-//	__HAL_RCC_CLEAR_RESET_FLAGS();
-//}
 
 /* USER CODE END 0 */
 
@@ -318,7 +276,6 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	RS_OK = 0;
-//	RS_count = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -348,12 +305,8 @@ int main(void)
 	HAL_Delay(2000);
 	printf("#ACT01-DS18B20/FW:STM8S_StdPeriph_Driver-Version:2.3.0/ID:28-72-E0-83-0B-00-00-A3/80\r\n");
 	Queue_Init(&queue,bufx,UART_RXSIZE_QUEUE);
-//	HAL_UART_Receive_IT(&huart2, &buffer, 1);
-//	printf("hello\n\r");
 	LL_ADC_Enable(ADC1);
 	
-//	IWDG->KR = 0xAAAA; // Writing 0xAAAA in the Key register prevents watchdog reset
-//  IWDG->KR = 0xCCCC; // Start the independent watchdog timer
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -371,16 +324,10 @@ int main(void)
 		{
 			if(HAL_GetTick() - timout0 > 19999)
 			{
-//				RS_count++;
 				MBSendData(88, info);
 				timout0 = HAL_GetTick();
 			}		
-		}
-//		if(RS_count == 1)
-//		{
-//			RS_count = 0;
-//			RS_OK = 1;
-//		}		
+		}	
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
