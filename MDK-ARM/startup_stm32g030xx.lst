@@ -341,12 +341,12 @@ ARM Macro Assembler    Page 6
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M0+ --apcs=inter
 work --depend=cayvailol\startup_stm32g030xx.d -ocayvailol\startup_stm32g030xx.o
- -I.\RTE\_ATC01_RS232_V1.1_220521_STM32G030 -IC:\Users\MYDELL\AppData\Local\Arm
-\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include -IC:\Users\MYDELL\AppData\Local\Arm\P
-acks\Keil\STM32G0xx_DFP\1.4.0\Drivers\CMSIS\Device\ST\STM32G0xx\Include --prede
-fine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 536" --predefine="
-_RTE_ SETA 1" --predefine="STM32G030xx SETA 1" --predefine="_RTE_ SETA 1" --lis
-t=startup_stm32g030xx.lst startup_stm32g030xx.s
+ -I.\RTE\_ATC01_RS232_V1.1_220521_STM32G030 -IC:\Users\VNET-HW\AppData\Local\Ar
+m\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include -IC:\Users\VNET-HW\AppData\Local\Arm
+\Packs\Keil\STM32G0xx_DFP\1.4.0\Drivers\CMSIS\Device\ST\STM32G0xx\Include --pre
+define="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 531" --predefine
+="_RTE_ SETA 1" --predefine="STM32G030xx SETA 1" --predefine="_RTE_ SETA 1" --l
+ist=startup_stm32g030xx.lst startup_stm32g030xx.s
 
 
 

@@ -63,7 +63,7 @@ static uint32_t timout3 = 0;
 static uint8_t RS_OK;
 
 uint8_t buffer;
-uint8_t flagtest = 0;
+uint8_t flagtest = 1;
 uint8_t error_check = 0;
 
 int bleng;
@@ -166,11 +166,20 @@ void Data_process()
 			{
 				printf("#OK,0B\r\n");
 				RS_OK = 1;
-				flagtest = 1;
+//				flagtest = 1;
 				Size_buff = 0;
 				if(Size_buff == 0)
 				{
 					checkavr = 0;
+				}
+				if(checkavr == 0)
+				{
+					for(int j = 1; j < 10; j++)
+					{
+						temp[10] += temp[j];
+					}
+					temp[0] =  (int)(temp[10] / (10));	
+					flagtest = 1;
 				}
 			}
 			
@@ -234,9 +243,9 @@ void Data_process()
 				{
 					if(HAL_GetTick() - timout1 > 999)
 					{
-						sprintf(str, "#Temperature,%d,",(int)temperatureC);
+						sprintf(str, "#Temperature,%d,",temp[0]);
 						CS = NMEA_checkSum(str, (int) (strlen(str)));
-						printf("#Temperature,%d,%X\r\n", (int)temperatureC, CS);
+						printf("#Temperature,%d,%X\r\n", temp[0], CS);
 						timout1 = HAL_GetTick();
 					}
 				}
